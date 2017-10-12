@@ -1,0 +1,162 @@
+<div id="home-view-container">
+<div ui-view="header" class="header">
+	<!-- nesting the header  -->
+</div>  
+<div class="row home-view-body">
+	<section  class="col-xs-4 col-md-3 section-left" >
+	
+		<div class="section-left-historique w3-row">
+			  <div class="w3-col s8 section-left-historique-title">Récents vente journalière</div>
+			  <div class="w3-col s4 section-left-historique-menu" >
+			  <div class="dropdown">
+						  <div class="dropdown-toggle"  id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" >
+						  	Selectionner
+						  	<span class="caret"></span>
+						  </div>
+						  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+						  	<!-- <li ><a href="#" ng-click="changeCurrentDailySale(todaySale)">{{currentDailySale.title}} </a>
+						  	</li> 
+						  	 <li role="separator" class="divider"></li>	 -->
+						  	
+						  	<li ng-repeat="daySale in weeklyDailySale"><a href="#" ng-click="changeCurrentDailySale(daySale)">{{daySale.title}} </a>
+						  	 <span ng-if="$first" class="my-divider"></span>
+
+						  	</li>
+						      
+						  </ul>
+				</div>
+			</div>	
+		
+			
+		</div>
+		<div class="section-left-historique-detail">
+			<div class="section-left-historique-detail-title"> 
+			<span class="w3-col s8 section-left-historique-title ">Aperçu de la vente du   </span> <span class="w3-col s4">{{currentDailySale.date |date:'dd MMM yyyy'}}</span> </div>
+			<div class="w3-row section-left-historique-detail-content">
+				<div class="w3-col s8">
+				<span  class="libelle-info section-left-historique-title">STATUS : </span><span  class="dailySale-non-valider" ng-class="{'dailySale-valider': currentDailySale.etat}"><strong>{{currentDailySale.etat | StatusFilter }}</strong>
+				<md-tooltip>{{statusTooltip()}} </md-tooltip>
+				</span> 
+				</div>
+				<div class="w3-col s4 test">
+				<span class="libelle-info">TOTAL: </span><span class="libelle-info-value badge-info" >
+				<!-- title=" nombre de produits vendus" -->
+				<md-tooltip>nombre de produits vendus</md-tooltip>{{currentDailySale.totalProduits}}</span>
+				</div>
+			</div>
+			
+		</div>
+
+		
+		<div class="section-left-command" ng-cloak="true">
+			<div class="section-left-command-container" >
+			<div class="header-command-title">
+    
+      				  <h5>
+         					Commandes
+         					<span  class="header-command-icon" ng-click="toogleAllCommand()" >
+         					...
+         					<md-tooltip>{{allExpanded ?'Reduire' :'Developper'}} les commandes</md-tooltip>
+         					</span>
+        				</h5>
+      				
+      				
+      		</div>
+    		
+			
+			<div class="w3-panel w3-card-12">
+				
+    			<div>	
+    					<!-- <commande-list></commande-list> -->
+    	<v-accordion class="vAccordion--default" multiple control="accordion">
+
+  <!-- add expanded attribute to open the section -->
+  <v-pane ng-repeat="commande in currentDailySale.commandes| orderBy :date |limitTo:3"  expanded="$first" >
+    <v-pane-header>
+      {{commande.title }}
+
+    </v-pane-header>
+
+    <v-pane-content>
+     <ul class="w3-ul w3-card-4" > 
+	  <li class="w3-display-container command-li" ng-repeat="prod in commande.produits" >
+	  	<span >{{prod.nom}}</span>
+	  	<span class="w3-display-right">{{prod.quantite}}</span>
+	  </li>
+	  </ul>
+  	 </v-pane-content>
+    </v-accordion>
+
+
+
+    			</div>
+
+
+			</div>
+			</div>
+		</div>
+	</section>
+	<section class="col-xs-14 col-md-9 section-right">
+		<div class="panel panel-default daily-sale-globale-info">
+		  <div class="panel-body daily-sale-globale-info-panel">
+		     <div>
+		     <h4 class="summary_title"> faible vente journalière de ce mois </h4>
+		       <h3 class="summary_value summary_value_pos">{{worstMonthSale |CurrencyFilter}}</h3>
+		     </div>
+		        <div>
+		      <h4 class="summary_title"> vente  journalière </h4>
+		       <h3 class="summary_value summary_value_courante">{{currentDailySale.chiffreAffaire |CurrencyFilter}}</h3>
+		     	  </div>
+		       <div>
+		      <h4 class="summary_title">meilleur vente journalière de ce mois</h4>
+		       <h3 class="summary_value summary_value_pos">{{bestMonthSale |CurrencyFilter}}  </h3>
+		       </div>
+		</div>
+		</div>
+		
+		<div   class="panel panel-default daily-sale-globale-body">
+		  <div class="panel-body">
+		  <div ui-view="menu" class="page-right-content">
+		  <!--  template for menu  -->
+		  </div>
+		  
+		  </div>
+		  
+		</div>
+		<div class="menu-drugstore">
+	
+			      <md-fab-toolbar md-direction="left" >
+			  <md-fab-trigger>
+			     <md-button aria-label="menu" class="md-fab md-primary menu-drugstore-icon">
+			            <md-icon  md-svg-src="/assets/img/menu.svg"></md-icon>
+			          </md-button>
+			          	<md-tooltip>Menu de gestion</md-tooltip>
+			  </md-fab-trigger>
+
+			  <md-toolbar>
+			   <md-fab-actions>
+			     <md-button aria-label="Add commande" ng-click="createNewCommand()">
+			       <md-icon md-svg-src="/assets/img/shopping_cart_24.svg"></md-icon>
+			       	Gestion des Commandes
+			     </md-button>
+
+			     <md-button aria-label="Add produit" ng-click="createNewProduit()">
+			       <md-icon md-svg-src="/assets/img/note_add_24.svg"></md-icon>
+			       Gestion des Produits
+			     </md-button>
+			     <md-button aria-label="Add client" ng-click="createNewClient()">
+			       <md-icon md-svg-src="/assets/img/supervisor_24.svg"></md-icon>
+			       Gestion  des Clients
+			     </md-button>
+			      <md-button aria-label="add depense" ng-click="displayDepense()">
+			       <md-icon md-svg-src="/assets/img/credit_card_24.svg"></md-icon>
+			       Gestion  des Depenses
+			     </md-button>
+			   </md-fab-actions>
+			  </md-toolbar>
+			</md-fab-toolbar>
+		</div>
+	</section>
+</div>
+</div>
+

@@ -1,0 +1,90 @@
+  <div class="drugstore-search-zone menu-dailySale-search">
+  	<!-- 	<div class="w3-container  w3-cell">
+  		<h5 class="filtre-zone">zone de filtre</h5>
+  		</div> -->
+        <form name="myForm" novalidate  ng-submit="rechercheDailySale(myForm)" >
+        <div class="form-container">
+        <span>date debut</span>
+        <md-datepicker  ng-model="myDateDebut" name="dateFieldDebut" required ></md-datepicker>
+        <div ng-if=" submitted">
+        <div ng-messages="myForm.dateFieldDebut.$error" class="form-error">
+          <div ng-message="valid">la valeur entree n'est pas une date valide!</div>
+          <div ng-message="required"> le choix d'une date de début est obligatoire!</div>
+        </div>
+    
+        </div>
+        </div>
+        <div class="form-container">
+         <span>date fin</span>
+          <md-datepicker ng-model="myDateEnd" name="dateFieldEnd" md-min-date="myDateDebut" 
+            md-max-date="maxDate" required></md-datepicker>
+          <div ng-if="submitted">
+          <div ng-messages="myForm.dateFieldEnd.$error" class="form-error" ng-show="myForm.dateFieldDebut.$touched">
+            <div ng-message="valid">la valeur entree n'est pas une date valide!</div>
+            <div ng-message="required">choix date obligatoire!</div>
+            <div ng-message="mindate">Date de fin doit etre superieur a date debut!</div>
+            <div ng-message="maxdate">Date de fin ne peut dépasser aujourd'hui !</div>
+          </div>
+             </div>
+          
+        </div>
+
+        <div class="w3-container  w3-cell form-button">
+  			<button class="w3-btn w3-teal w3-round w3-hover-blue" type="submit" >chercher</button>
+       </div>
+       </form>
+			  	<div class="container  drugstore-search-zone-only w3-right ">
+        				<div class="col-md-12">
+    						<div class="form-group">
+                				<div class="icon-addon addon-md drugstore-search-zone-input">
+                 				   <input type="text" placeholder="search..." class="form-control" ng-model="searchText">
+                 				   <!-- <label for="search" class="glyphicon glyphicon-search" ></label> -->
+                				</div>
+            				</div>
+		 				</div>
+		  		
+		  		</div>
+		  	</div>
+		  <hr/>
+		 <div class="w3-panel title-drugstore-content w3-text-indigo ">
+			  
+			    	<h3>{{title}}
+			    	</h3>
+			  
+		  </div>
+		 
+			 <div class="drugstore-menu-content" >
+			 <md-list class="menu-dailySale">
+	<md-list-item  ng-repeat="dailySale in dailySales |filter :searchText" ng-class="{'produit-line-impair':$odd}" >
+   						
+    					<div class="md-list-item-text list-date-cell-parent dailySale-list-date">
+        					<p class="list-date-cell">
+        					     {{dailySale.date | date : "EEE dd MMM yy"}}
+        					<p>
+    					</div>
+	 					 <div class="list-price-cell dailySale-list-prix">{{dailySale.chiffreAffaire |CurrencyFilter}}
+          <md-tooltip>chiffre d'affaire de la vente</md-tooltip>
+             </div> 
+	 					<div class="dailySale-list-quantite">{{dailySale.totalProduits}}
+            <md-tooltip>nombre de produit vendu</md-tooltip>
+            </div>
+	 					<div  class="dailySale-non-valider dailySale-list-status" ng-class="{'dailySale-valider': dailySale.etat}">{{dailySale.etat | StatusFilter }}
+            <md-tooltip>etat de la vente</md-tooltip>
+            </div>
+           
+            <div class="list-price-cell dailySale-list-benefice">{{dailySale.benefice | CurrencyFilter}}
+             <md-tooltip>benefice de la vente journalière</md-tooltip>
+             </div>
+	 					<div class="md-list-item-text">
+	 					   <md-button class="md-secondary md-raised md-primary  buton-dailySale-menu" ng-click="showDailySaleDetails(dailySale)">details</md-button>
+	 					</div>
+  </md-list-item>
+</md-list>
+<md-divider></md-divider>
+
+ <div class="more-dailySale">
+   <a href="" ng-click="displayMoreDailySale()">afficher plus de vente ...</a>
+ </div> 
+	</div>
+
+

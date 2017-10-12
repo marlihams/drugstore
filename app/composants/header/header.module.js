@@ -1,0 +1,1 @@
+angular.module("drugstore.header",['drugstore.user','drugstore.service']);

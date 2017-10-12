@@ -1,0 +1,1 @@
+angular.module('pouchdb.service', ['pouchdb','drugstore.manager']);

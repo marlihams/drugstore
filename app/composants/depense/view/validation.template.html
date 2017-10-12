@@ -1,0 +1,29 @@
+<md-dialog aria-label="List dialog" class="dialog-validation">
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h4>validation/invalidation Dépense</h4>
+        <!-- <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        </md-button> -->
+      </div>
+    </md-toolbar>
+  <md-dialog-content>
+  <div class="md-dialog-content">
+    Vous êtes sur le point de valider/invalider la dépense afficher.<br/>
+    êtes vous sûr de votre action ?<br/>
+     cliquer sur:<br/>
+      &nbsp;&nbsp;&nbsp; - valider pour valider la dépense.<br/>
+     &nbsp;&nbsp;&nbsp;  - invalider pour invalider la dépense <br/>
+     &nbsp;&nbsp;&nbsp;  - annuller ou ailleur pour annuler et fermer l'action.<br/>
+  </div>
+    
+  </md-dialog-content>
+  <md-dialog-actions layout="row">
+    <md-button ng-click="validateDepense()" class="md-raised md-primary">Valider</md-button>
+     <md-button class="md-accent md-raised md-hue-1" ng-click="unValidateDepense()" class="md-warn">Invalider</md-button>
+      <md-button  class="md-raised" ng-click="closeDialog()" class="md-primary">Annuller</md-button>
+  </md-dialog-actions>
+  </form>
+</md-dialog>

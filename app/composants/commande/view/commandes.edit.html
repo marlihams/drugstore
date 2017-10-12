@@ -1,0 +1,209 @@
+<div id="commande-view-container">
+<div ui-view="header" class="header">
+    <!-- nesting the header  -->
+</div> 
+<div class="row commande-section-view-body">
+<section class=" panel panel-default commande-section-header  commande-edit-section-header">
+<!--  partie top
+ -->
+<div class="commande-section-title">
+
+ <p> Aperçu de la commande du {{commande.date | date : 'dd-M-yyyy  à h:mm a' }}
+ </p>
+ <div>
+    <md-input-container>
+         <label>Titre de la commande </label>
+          <input name="title" ng-model="commande.title" />
+    </md-input-container>
+     
+ </div>
+  <div ng-init="searchClient=setSelectedClient()">
+ <md-autocomplete md-autoselect="true" md-clear-button=true md-selected-item="selectedItem" md-no-cache=true md-min-length=3 md-search-text="searchClient" md-items="item in getMatches(searchClient)" md-item-text="item.display" md-floating-label="Nom du client" md-menu-class="autocomplete-dropdown">
+    <md-item-template> 
+    <span md-highlight-text="searchClient">{{item.display}}
+    </span>
+
+        </md-item-template>
+</md-autocomplete>
+  </div>
+</div>
+
+ <div class="commande-section-header-info">
+     
+     <div>
+         <span>Total :</span>
+         <div class="info-title">
+
+            {{commande.chiffreAffaire | CurrencyFilter}}
+         </div>
+     </div>
+    <div>
+         <span>Montant Payer :</span>
+        <div class="info-title">
+            {{commande.montantPayer | CurrencyFilter}}
+          </div>
+     </div>
+ </div>
+ <div class="commande-section-header-info">
+     <div>
+         <span>Quantite :</span>
+         <div class="info-title">
+            {{commande.totalProduits}}
+          </div>
+     </div>
+     
+     <div>
+         <span>Montant dû :</span>
+        <div class="info-title" ng-init="resteAPayer= commande.chiffreAffaire-commande.montantPayer">
+            {{resteAPayer |CurrencyFilter }}
+          </div>
+     </div>
+ </div>
+    
+ </section>
+ <div  class="commande-edit-section">
+ <section class=" w3-row-padding  commande-section-produit">
+    <!-- partie gauche -->
+    <div class=" panel panel-default">
+         <div class="w3-panel commande-title-content title-drugstore-content w3-text-indigo ">
+                <div class="w3-container  w3-cell">
+                    <h3>Produits disponibles 
+                    </h3>
+                </div>
+                <div class="w3-container search-zone-only w3-right ">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="icon-addon addon-md drugstore-search-zone-input">
+                                   <input type="text" placeholder="search..." class="form-control" ng-model="search">
+                                   <!-- <span for="search" class="glyphicon glyphicon-search" ></span> -->
+                                   </input>
+
+                                </div>
+                            </div>
+                        </div>
+                    
+                </div>
+
+          </div>
+            
+          <hr/>
+            <div ng-show="error" class="error-message">
+            <p class="form-error"> La quantite choisis doit être inférieur ou égale au stock et supérieur à zéro
+          </div>
+        <md-list>
+    <md-list-item   class="md-no-proxy command-new" ng-repeat="produit in produits |filter :search"    ng-class="{'produit-line-impair':$odd} "  >
+                        
+                        <div class="md-list-item-text list-date-cell-parent ">
+                        <p class="list-date-cell">
+                        {{produit.expirationDate | date: 'MMM' }}
+                        </p>
+                        <p class="list-date-cell">
+                    
+                        {{produit.expirationDate | date: 'yyyy' }}
+                        
+                        </p>
+                        </div>
+                        <div class="md-list-item-text" >
+                            <h4>{{produit.nom}}</h4>
+                            <p class="md-caption">{{produit.description}}</p>
+                        </div>
+                        <div >
+                        <div class="form-group produit-number">
+                          <input type="number" min="0"  ng-init="produit.model=setDefaultValue(produit)" ng-model="produit.model" class="md-list-item-number  form-control"  ng-class="{'input-error' : produit.model > produit.stock}" ng-click=updateData(produit) /> 
+                        </div>
+                        </div>
+        
+                            <div class="md-list-item-text" >{{produit.emplacement}}
+                        </div>
+                        <div class="md-list-item-text" >{{produit.stock}}
+                        </div>
+                        <div class="list-price-cell">{{produit.prixVente |CurrencyFilter}}
+                        </div>
+                    <div   ng-init="produit.checkBox=isChecked(produit)" >
+                        <md-checkbox  class="md-secondary" ng-model="produit.checkBox" ng-change="produitValueChanged(produit)">
+                        </md-checkbox>
+                    </div>
+                        
+   
+  </md-list-item>
+</md-list>
+    </div>
+ </section>
+<section class=" w3-row-padding commande-section-selected-produit ">
+    <!-- partie gauche -->
+    <div class=" panel panel-default">
+         <div class="w3-panel title-drugstore-content w3-text-indigo  ">
+              
+                    <h4> details de la commande
+                    </h4>
+
+          </div>
+          <hr/>
+         
+             <span class="facture-title"> produits</span>
+         <md-list>
+    <md-list-item  class="facture"  ng-repeat="produit in commande.produits"  class="md-offset" ng-class="{'produit-line-impair':$odd}" >
+                        
+                        <div class="md-list-item-text facture-first" >
+                            {{produit.nom}}  
+                        </div>
+                
+                        <div class="md-list-item-text facture-second">
+                        {{produit.quantite}}
+                           <md-tooltip>prix total du produit</md-tooltip>
+                        </div>
+                     
+                        <div class="list-price-cell facture-quart">{{prixTotal(produit) |CurrencyFilter}}
+                        <md-tooltip>prix total du produit</md-tooltip></div>
+                        
+        
+  </md-list-item>
+</md-list>
+<hr/>
+<span class="facture-title">Autre </span>
+<div ng-show="submitted && errorSubmited" class=" facture-info error-message">
+            <p class="form-error">Montant payer doit être inférieur ou égale au total de la facture </p>
+    </div>
+    <div class="facture-info">
+        <md-subheader class="">Client :</md-subheader>
+         <md-subheader class="">{{selectedItem.display}}</md-subheader>
+    </div>
+
+     <div class="facture-info">
+        <md-subheader class=""> Quantite Total de Produits :</md-subheader>
+        <md-subheader class="list-price-cell total-produit">{{commande.totalProduits}}</md-subheader>
+    </div>
+    <div class="facture-info">
+        <md-subheader class="md-no-sticky">Prix Total :</md-subheader>
+        
+         <md-subheader class="list-price-cell">{{commande.chiffreAffaire |CurrencyFilter}} </md-subheader>
+    </div>
+    <div class="facture-info">
+        <md-subheader class="facture-info-input">Montant Payer :</md-subheader>
+         <md-subheader class="">
+             <input type="number" ng-blur="updateResteApayer()"  ng-model="commande.montantPayer" class="form-control"  ng-class="{'input-error' : commande.montantPayer > commande.chiffreAffaire}"  /> 
+         </md-subheader>
+       
+    </div>
+     <div class="facture-info">
+        <md-subheader class="facture-info-input">Reduction :</md-subheader>
+         <md-subheader class="">
+             <input type="number" ng-blur="updateResteApayer()"  ng-model="commande.reduction" class="form-control"  ng-class="{'input-error' : commande.reduction > commande.chiffreAffaire}"  /> 
+         </md-subheader>
+       
+    </div>
+    <div class="facture-info">
+        <md-subheader class="">Reste A Payer :</md-subheader>
+         <md-subheader  class="list-price-cell">{{resteAPayer | CurrencyFilter}}</md-subheader>
+    </div>
+    <div class="section-button">
+   
+        <md-button class="md-primary md-raised w3-hover-blue" ng-click="validateChange()">sauvegarder</md-button>
+         <md-button class="md-accent md-raised w3-hover-blue" ng-click="inprimerFacture()">imprimer</md-button>
+     </div>
+    </div>
+   
+ </section>
+</div>
+</div>
+</div>

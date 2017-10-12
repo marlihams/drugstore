@@ -1,0 +1,125 @@
+/*  accordion css */
+.md-accordion{
+ width: 100%;
+ padding:0px !important;
+ margin: 0px !important;
+}
+
+.md-accordion md-toolbar{
+  cursor:pointer;
+  /*border-bottom:1px solid rgb(63,107,181);*/
+  height: 20px;
+ 
+  min-height: 30px !important;
+   color:#bad2ea;
+   font-size: 13px;
+   background-color:#071c33 !important; 
+   padding: 0px !important;
+   margin: 0px !important;
+   outline: none;
+}
+
+.md-accordion .md-toolbar-tools{
+    min-height: 30px !important;
+    height: 30px !important;
+    max-height: 40px !important;
+    padding: 0px !important;
+   margin: 0px !important;
+}
+
+
+
+/*.md-accordion md-toolbar:hover,.md-accordion .activeContent:hover{
+  background-color: rgba(255,255,255,0.1) !important;
+  border: 0px !important;
+
+}*/
+
+/*.md-accordion:hover,.md-accordion .md-toolbar-tools:hover{
+   background-color: rgba(255,255,255,0.1) !important;
+  border: 0px !important;
+}
+*/
+.md-accordion .expandCollapse { 
+  width:30px;
+  height:30px;
+  position:relative;
+  font-size:20px;
+  
+  cursor:pointer;
+ 
+  display:block;
+  margin-top: -2px;
+  margin-left: -2px;
+  overflow:hidden;
+}
+.md-accordion .expandCollapse:active {
+  border:0px;
+}
+.md-accordion .expandCollapse:before, .md-accordion .expandCollapse:after {
+  width:30px;
+  height:30px;
+  display:block;
+  position:absolute;
+  top:0; left:0;
+  line-height:32px;
+  text-align:center;
+  -webkit-transition: .3s all ease-out;
+  transition: .3s all ease-out;
+}
+.md-accordion .expandCollapse:before { 
+  opacity:1
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+  content: "|";
+  margin-top:-3px;
+}
+.md-accordion .expandCollapse:after {
+  opacity:1;
+  -webkit-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+  content: "|";
+  margin-left:-3px;
+}
+.md-accordion .active:before {
+  opacity:1;
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+  margin-left:1px;
+  margin-top:2px;
+}
+
+.md-accordion .dataContent {
+  height:0px;
+  overflow:hidden;
+  -webkit-transition: .3s all ease-out;
+  transition: .3s all ease-out;
+}
+
+.md-accordion .activeContent {
+  height:auto;
+  /*padding:5px;*/
+  padding-top:5px;
+  padding-bottom:5px;
+  padding-right: 5px;  
+  display:block;
+}
+
+
+
+
+/*   end accordion css */
+
+
+.md-accordion .w3-ul{
+  font-size:12px; 
+}
+
+.w3-ul li{
+  border-bottom: none !important;
+}
+
+.w3-ul li:hover{
+ background-color: rgba(255,255,255,0.1) !important;
+ border-left:3px solid #df137a;
+ }

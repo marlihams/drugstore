@@ -1,0 +1,1 @@
+angular.module('drugstore.user', ['drugstore.shared','ngResource']);

@@ -1,0 +1,94 @@
+  <div class="drugstore-search-zone">
+      <div class="w3-container  w3-cell">
+      <h5 class="filtre-zone">zone de filtre</h5>
+      </div>
+      
+        <div class="w3-container  w3-cell">
+        <md-select  placeholder="choix option" class="md-no-underline" ng-model="champFiltreCommande" required>
+          <md-option value="client">nom du client</md-option>
+          <md-option value="totalProduits">nombre de produit</md-option>
+            <md-option value="chiffreAffaire">prix total</md-option>
+        </md-select>
+        </div>
+        <div class="w3-container  w3-cell">
+        <md-select  class="md-no-underline" ng-model="fitreOrdre" placeholder="ordre de tri" >
+          <md-option value="0">decroissant</md-option>
+          <md-option value="1">croissant</md-option>
+        </md-select>
+        </div>
+
+        <div class="w3-container  w3-cell">
+        <button class="w3-btn w3-teal w3-round w3-hover-blue" ng-click="filtreCommande(champFiltreCommande,fitreOrdre)">Trier</button>
+      </div>
+          <div class="container  drugstore-search-zone-only w3-right ">
+                <div class="col-md-12">
+                <div class="form-group">
+                        <div class="icon-addon addon-md drugstore-search-zone-input">
+                           <input type="text" placeholder="search..." class="form-control" ng-model="searchText">
+                           <!-- <label for="search" class="glyphicon glyphicon-search" ></label> -->
+                        </div>
+                    </div>
+            </div>
+            
+          </div>
+        </div>
+      <hr/>
+     <div class="w3-panel title-drugstore-content w3-text-indigo ">
+        
+            <h3> liste des commandes du {{currentDailySale.date |date:'dd MMM yyyy'}}
+            </h3>
+        
+      </div>
+     
+       <div class="drugstore-menu-content" >
+       <md-list class="">
+  <md-list-item ng-repeat="commande in commandes |filter :searchText" ng-class="{'produit-line-impair':$odd}" class="md-no-proxy menu-commande-list" >
+              
+              <div class="md-list-item-text list-date-cell-parent command-list-date">
+                  <p class="list-date-cell">
+                  {{commande.date | date :'hh:mm a' }}  
+                  </p>
+              </div>
+              
+            <div class="md-list-item-text command-list-client" >
+              {{getClientFullName(commande)}}
+            </div>
+            <!-- <div class="md-list-item-text">{commande.payer | statusFilter)}}</div> -->
+            
+            <div class="md-list-item-text command-list-title">{{commande.title}}</div>
+            <div class="md-list-item-text command-list-quantite">
+               <img alt="total produit" ng-src="/assets/img/chiffre/{{commande.totalProduits < 10 ? commande.totalProduits :'plus'}}.PNG"/>
+            </div>
+            <div class=" md-list-item-text list-price-cell command-list-prix">{{commande.chiffreAffaire | CurrencyFilter}}
+            </div> 
+      <div>
+                <md-menu md-position-mode="target-right target" class="md-secondary">
+                    <md-button class="md-icon-button ">
+                       <md-icon md-svg-src="/assets/img/list_black_24.svg" class="md-hue-2" ng-mouseenter="$mdMenu.open($event)">
+               <!--  <md-tooltip>informations complementaires</md-tooltip>  -->
+               </md-icon>
+                    </md-button>
+                    <md-menu-content width="3"  ng-mouseleave="$mdMenu.close()">
+                      <md-menu-item>
+                        <md-button ng-click="displayDetails(commande)">
+                          details
+                        </md-button>
+                      </md-menu-item>
+                      <md-menu-divider></md-menu-divider>
+                      <md-menu-item>
+                        <md-button ng-click="modifierCommande(commande)">
+                          modifier
+                        </md-button>
+                      </md-menu-item>
+                    </md-menu-content>
+                  </md-menu>
+         </div>     
+
+  </md-list-item>
+</md-list>
+
+ 
+  
+  </div>
+
+

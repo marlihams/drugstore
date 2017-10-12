@@ -1,0 +1,1 @@
+angular.module('drugstore.depense', ['drugstore.shared','ngResource']);

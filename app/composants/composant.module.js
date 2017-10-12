@@ -1,0 +1,1 @@
+angular.module('drugstore.composant', ['drugstore.user','drugstore.dailySale','drugstore.commande','drugstore.produit','drugstore.depense','drugstore.error','drugstore.home']);

@@ -1,0 +1,1 @@
+angular.module('drugstore.filter', ['filter.currencyFilter','filter.statusFilter','filter.firstLetterFilter']);

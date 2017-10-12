@@ -1,0 +1,199 @@
+<div id="commande-view-container">
+<div ui-view="header" class="header">
+    <!-- nesting the header  -->
+</div> 
+<div class="row commande-section-view-body">
+<section class=" panel panel-default commande-section-header  commande-edit-section-header">
+<!--  partie top
+ -->
+<div class="commande-section-title">
+
+ <p> vente journalière du {{dailySale.date | date : 'dd-M-yyyy' }}
+ </p>
+ <div ng-init="modifierTitle=false" ng-show="modifierTitle">
+    <md-input-container>
+         <label>Titre de la vente journalière </label>
+          <input name="title" ng-model="dailySale.title" />
+    </md-input-container>
+         
+ </div>
+ <div ng-show="!modifierTitle">
+   Titre de la vente: <span> {{dailySale.title}} </span>  
+    <md-button class="md-icon-button" ng-click="modifyTitle()">
+         <md-icon md-svg-src="/assets/img/edit_black_icon_18.svg" >
+         </md-icon>
+         <md-tooltip>modification du titre</md-tooltip>
+    </md-button>
+                    
+ </div>
+ <div  ng-init="modifierStatus=false" ng-show="modifierStatus" >
+        <md-select md-container-class ="dailySale-detail-statut" ng-model="dailySale.etat" >
+            <md-option ng-value="true">oui</md-option>
+            <md-option ng-value="false">non</md-option>
+        </md-select>
+  </div>
+ <div  ng-show="!modifierStatus" >
+   Statut :<span class="dailySale-non-valider" ng-class="{'dailySale-valider': dailySale.etat}"> {{dailySale.etat | StatusFilter }}
+  <md-tooltip>statut de la vente</md-tooltip>
+   </span>
+    <md-button class="md-icon-button " ng-click="modifyStatus()">
+        <md-icon md-svg-src="/assets/img/edit_black_icon_18.svg" >
+         </md-icon>
+         <md-tooltip>modification statut de la vente</md-tooltip>
+    </md-button>
+  </div>   
+  
+</div>
+
+ <div class="commande-section-header-info">
+     
+     <div>
+         <span>Total :</span>
+         <div class="info-title summary_value_pos">
+
+            {{dailySale.chiffreAffaire | CurrencyFilter}}
+         </div>
+     </div>
+     <div>
+         <span>Quantite :</span>
+         <div class="info-title">
+            {{dailySale.totalProduits}}
+          </div>
+     </div>
+     
+    <div >
+         <span>Benefice</span>
+        <div class="info-title summary_value_pos">
+            {{dailySale.benefice | CurrencyFilter}}
+          </div>
+     </div>
+ </div>
+ <div class="commande-section-title button-save-dailySale">
+     
+  <div class="w3-container  w3-cell">
+            <button  ng-click="saveAllChange()" class="w3-btn w3-blue w3-round w3-hover-teal">Sauvegarder
+            <md-tooltip>sauvegarder tous les changements</md-tooltip>
+            </button>
+                </div>   
+</div>
+ </section>
+ <div  class="commande-edit-section">
+ <section class=" w3-row-padding  commande-section-produit">
+    <!-- partie gauche -->
+    <div class=" panel panel-default">
+         <div class="w3-panel commande-title-content title-drugstore-content w3-text-indigo ">
+                <div class="w3-container  w3-cell">
+                    <h6> vente journalière du {{dailySale.date | date :'dd  MMM  yyyy'}}
+                    </h6>
+                </div>
+                <div class="w3-container search-zone-only w3-right ">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="icon-addon addon-md drugstore-search-zone-input">
+                                   <input type="text" placeholder="search..." class="form-control" ng-model="search">
+                                   <!-- <label for="search" class="glyphicon glyphicon-search" ></label> -->
+                                </div>
+                            </div>
+                        </div>
+                    
+                </div>
+               
+
+          </div>
+            
+          <hr/>
+        <md-list > 
+    <md-list-item   class="md-no-proxy dailySale-details" ng-repeat="commande in dailySale.commandes |filter :search"  ng-class="{'produit-line-impair':$odd, 'ligne-selected':commande.selected}"  >
+                        
+                <div class="md-list-item-text dailySale-details-col1 list-date-cell-parent">
+                  <p class="list-date-cell">
+                  {{commande.date | date :'hh:mm a' }}  
+                  </p>
+              </div>
+                <div class="md-list-item-text dailySale-details-col2" >
+                            {{commande.title}}
+                            <md-tooltip>nom de la commande</md-tooltip>
+                </div>
+                 <div class="md-list-item-text">
+               <img alt="total produit" ng-src="/assets/img/chiffre/{{commande.totalProduits < 10 ? commande.totalProduits :'plus'}}.PNG"/>
+               <md-tooltip>nombre de produits de la commande</md-tooltip>
+            </div>
+                <div class="list-price-cell dailySale-details-col4">{{commande.chiffreAffaire | CurrencyFilter}}
+                <md-tooltip>chiffre d'affaire de la commande</md-tooltip>
+                </div>
+                <div class="dailySale-non-valider dailySale-details-col5 " ng-class="{'dailySale-valider': commande.payer}">{{commande.payer | StatusFilter }}
+                 <md-tooltip>payer en totalité ou non </md-tooltip>
+                </div>
+                <div class="list-price-cell dailySale-details-col4">{{commande.benefice |CurrencyFilter}}
+                <md-tooltip>benefice de la commande</md-tooltip>
+                </div>
+                <div >
+                  <md-icon md-svg-src="/assets/img/chat_24px.svg" ng-click="changeSelectedCommand(commande)" aria-label="display command" class="md-secondary md-hue-3">
+                  <md-tooltip>afficher contenu de la commande</md-tooltip>
+                  </md-icon>
+                <md-icon class="md-secondary" ng-click="deleteCommand(commande)" aria-label="delete command" md-svg-src="/assets/img/delete_black_24.svg">
+                <md-tooltip>supprimer la commande</md-tooltip>
+                </md-icon>     
+                </div>
+  </md-list-item>
+</md-list>
+    </div>
+ </section>
+<section class=" w3-row-padding commande-section-selected-produit ">
+    <!-- partie gauche -->
+    <div class=" panel panel-default">
+         <div class="w3-panel title-drugstore-content w3-text-indigo  ">
+              
+                    <h6> details de la commande &nbsp;&nbsp; {{selectedCommand.title}}
+                    </h6>
+
+          </div>
+          <hr/>
+
+         <md-list>
+    <md-list-item  class="facture"  ng-repeat="produit in selectedCommand.produits"  class="md-offset" ng-class="{'produit-line-impair':$odd}" >
+                        
+                        <div class="md-list-item-text facture-first" >
+                            {{produit.nom}}  
+                        </div>
+                
+                        <div class="md-list-item-text facture-second">
+                        {{produit.quantite}}
+                           <md-tooltip>quantite du produit</md-tooltip>
+                        </div>
+                        <div class="list-price-cell facture-quart">{{prixTotal(produit) |CurrencyFilter}}
+                        <md-tooltip>prix total du produit</md-tooltip>
+                        </div>
+                        
+        
+  </md-list-item>
+</md-list>
+<hr/>
+
+
+    <div class="facture-info">
+        <md-subheader class="">total Produits :</md-subheader>
+         <md-subheader class="">{{selectedCommand.totalProduits}}</md-subheader>
+    </div>
+    <div class="facture-info" ng-init="clientName=getClientName()">
+        <md-subheader class="">Client :</md-subheader>
+         <md-subheader class="">{{clientName}}</md-subheader>
+    </div>
+    <div class="facture-info">
+        <md-subheader class="">Montant Payer :</md-subheader>
+         <md-subheader class="list-price-cell">{{selectedCommand.montantPayer | CurrencyFilter}} </md-subheader>
+    </div>
+    <div class="facture-info">
+        <md-subheader class="">Reste A Payer :</md-subheader>
+             <md-subheader ng-init="resteAPayer=updateResteApayer()" class="list-price-cell">{{resteAPayer |CurrencyFilter}} 
+             </md-subheader> 
+       
+    </div>
+
+    
+    </div>
+   
+ </section>
+</div>
+</div>
+</div>

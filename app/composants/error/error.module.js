@@ -1,0 +1,1 @@
+angular.module('drugstore.error', ['drugstore.user']);

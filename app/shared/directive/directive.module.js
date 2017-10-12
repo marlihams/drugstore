@@ -1,0 +1,1 @@
+angular.module('drugstore.directive', ['chooseFile.directive']);

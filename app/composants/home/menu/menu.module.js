@@ -1,0 +1,1 @@
+angular.module("drugstore.menu",['drugstore.user','drugstore.service']);

@@ -1,0 +1,29 @@
+
+<div id="auth-view-container">
+  <div class="page-container">
+    <div class="page-header">
+
+        <h3>Pharmacie-paris</h3>
+      </div>
+
+      <div ng-show="error" class="alert alert-danger row">
+        <span>{{ error.message }}</span>
+      </div>
+
+      <form ng-submit="register()" style="margin-top:30px;">
+        <h5>nouveau compte</h5>
+
+        <div class="form-group">
+          <input type="text"  class="form-control" placeholder="Username"  ng-model="user.username"></input>
+        </div>
+        <div class="form-group">
+          <input type="password" class="form-control" placeholder="Password" ng-model="user.password"></input>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg btn-block">valider</button>
+        <button type="cancel" class="btn btn-danger btn-lg btn-block" ng-click="goLoginPage()">annuler</button>
+      </form>
+      <div>
+       
+      </div>
+    </div>
+  </div>

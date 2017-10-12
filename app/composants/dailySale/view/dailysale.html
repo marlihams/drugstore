@@ -1,0 +1,33 @@
+  <div class="drugstore-search-zone">
+			  	<div class="container  drugstore-search-zone-only w3-right ">
+        				<div class="col-md-12">
+    						<div class="form-group">
+                				<div class="icon-addon addon-md drugstore-search-zone-input">
+                 				   <input type="text" placeholder="search..." class="form-control" ng-model="searchText">
+                 				   <!-- <label for="email" class="glyphicon glyphicon-search" ></label> -->
+                				</div>
+            				</div>
+		 				</div>
+		  			
+		  		</div>
+		  	</div>
+		  <hr/>
+		 <div class="w3-panel title-drugstore-content w3-text-indigo ">
+			  
+			    	<h3>{{title}}</h3>
+			  
+		  </div>
+		 
+			 <div class="drugstore-menu-content" >
+			   	<table class="w3-table w3-striped w3-centered ">
+
+			   		<tr ng-repeat="element in homeCollection |filter:searchText">
+		 				<td>{{$index + 1}}</td>
+	 					<td>{{element.nom}}</td>
+	 					<td>{{element.quantite}}</td>
+	 					<td>{{element.prixVente}}</td>
+					</tr>
+
+			   	</table>
+			   	
+	</div>

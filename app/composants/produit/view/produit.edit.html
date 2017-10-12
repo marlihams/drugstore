@@ -1,0 +1,137 @@
+<div id="produit-view-container">
+<div ui-view="header" class="header">
+    <!-- nesting the header  -->
+</div> 
+<div class="produit-section-view-body">
+<div class="produit-section-content-body">
+<section class="produit-header-section">
+<div class="title">
+	<p> Modification du Produit Doliprane</p>
+</div>
+<div class="close">
+	<!-- <md-button ng-click=close()> -->
+	 <md-icon  ng-click=close() md-svg-src="/assets/img/close_white_24.svg" aria-label="close" >      
+      </md-icon>
+    <!-- </md-button> -->
+</div>
+</section>
+<section class=" panel panel-default produit-content-section">
+	<div class="panel-body">
+	<div class="produit-form">
+		<form name="produitEditForm" >
+		
+		
+
+		<md-input-container class="md-block">
+	        <label>nom du produit</label>
+	        <input type="text"   required  name="nom" ng-model="produit.nom">
+	        <div ng-messages="produitEditForm.nom.$error">
+	        	<div ng-message="required">le nom du produit est obligatoire</div>
+	        </div>
+	    </md-input-container>
+	   
+	    <md-input-container class="md-block">
+	        <label>prix d'achat</label>
+	        <input  required=""  type="number" name="prixAchat" ng-model="produit.prixAchat">
+	        <div ng-messages="produitEditForm.prixAchat.$error">
+	        	<div ng-message="required">le nom d'achat du produit est obligatoire
+	        	</div>
+	        </div>
+	    </md-input-container>
+
+	     <md-input-container class="md-block">
+	        <label>prix de vente</label>
+	        <input  required=""  type="number" name="prixVente" ng-model="produit.prixVente" ng-min="produit.prixAchat">
+	        <div ng-messages="produitEditForm.prixVente.$error">
+	        	<div ng-message="required">le prix  de vente du produit est obligatoire
+	        	</div>
+	        	<div ng-message="min">le prix de vente doit être supérieur ou égale au prix d'achat.
+	        	</div>
+	        </div>
+	    </md-input-container>
+
+	 <md-input-container>
+	    <label>Description</label>
+	    <textarea type="text" name="description" ng-model="produit.description" required  rows="2"></textarea>
+	    <div ng-messages="produitEditForm.description.$error" >
+	      <div ng-message="required">une description du produit est obligatoire</div>
+	    </div>
+  </md-input-container>
+  <div ng-init="nbSelected=0;isStarted=false" ng-show="nbSelected ==0 && isStarted" class="form-error error-zone">
+  	 selectionner un ou plusieurs emplacement à supprimer
+  </div>
+    <table class="produit-detail w3-table-all w3-centered">
+    <thead>
+      <tr class="w3-light-grey">
+        <th>Date d'expiration</th>
+        <th>emplacement</th>
+        <th>quantite</th>
+        <th>selection</th>
+      </tr>
+    </thead>
+    <tr  ng-repeat="details in produit.details track by $index">
+    <td ng-init="details.expirationDate=initializeExpirationDate(details);details.key=initializeKey(details)">
+    	<md-datepicker  ng-model="details.expirationDate" ></md-datepicker>
+    </td>
+    <td>
+    	 <div class="form-group">
+     		 <input type="text" class="form-control" placeholder="saisir emplacement" ng-model="details.emplacement">
+    </div>
+    </td>
+    <td>
+    	<div class="form-group">
+     		 <input type="number" class="form-control" placeholder="saisir quantite" ng-model="details.quantite">
+    </div>
+    </td>
+    <td class="checkbox-cell" ng-init="detail.selected=false">
+    	<md-checkbox  aria-label="checkbox-details"  ng-model="details.selected" ng-change="addDetailToDelete(details)" >
+    		
+    	</md-checkbox>
+    </td>
+     </tr>
+  </table>
+  <div class=" container button-produit-details">
+  	<md-button ng-click=addDetails()>
+  	 <md-icon md-svg-src="/assets/img/plus_18.svg" aria-label="ajouter" >      
+      </md-icon>
+       Ajouter
+       <md-tooltip> ajouter un emplacement</md-tooltip>
+      </md-button>
+       
+      <md-button ng-click=deleteSelectedDetails()>
+      <md-icon md-svg-src="/assets/img/delete_18_d.svg"  aria-label="supprimer" >
+      </md-icon>
+       effacer
+       <md-tooltip> supprimer l'emplacement selectionné</md-tooltip>
+       </md-button>
+  </div>
+  <div class=" container button-form-details">
+  <md-button class="md-raised md-primary"  ng-click="saveChangement()">
+  	 <md-icon md-svg-src="/assets/img/save_black_18px.svg" aria-label="Sauvegarder" >      
+      </md-icon>
+       Sauvegarder
+       <md-tooltip> sauvegarder les changements</md-tooltip>
+   </md-button>
+   <md-button class="md-accent md-raised md-hue-2" ng-click="deleteProduit()" >
+  	 <md-icon md-svg-src="/assets/img/delete_18.svg" aria-label="delete" >      
+      </md-icon>
+       Supprimer
+       <md-tooltip> supprimer  le produit</md-tooltip>
+   </md-button>
+  
+  	
+  </div>
+	</form>
+
+
+
+	</div>
+
+
+	</div>
+
+</section>
+
+</div>
+</div>
+</div>

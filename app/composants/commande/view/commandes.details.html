@@ -1,0 +1,103 @@
+<div id="commande-view-container">
+<div ui-view="header" class="header">
+	<!-- nesting the header  -->
+</div> 
+<div class="row commande-section-view-body">
+<section class=" panel panel-default commande-section-header">
+<!--  partie top
+ -->
+<div class="commande-section-title">
+ <p> Aperçu de la commande du {{commande.date | date : 'dd-M-yyyy  à h:mm a' }}
+ 
+ </p>
+ <div>
+	 <p>Titre de la commande : {{commande.title}}</p>
+	
+ </div>
+  <div>
+	 <p>client : {{commande.client ? commande.client:'Inconnu'}} </p>
+  </div>
+  </div>
+
+ <div class="commande-section-header-info">
+	 
+	 <div>
+		 <span>Total :</span>
+		 <div class="info-title">
+
+		 	{{commande.chiffreAffaire | CurrencyFilter}}
+		 </div>
+	 </div>
+	<div>
+		 <span>Montant Payer :</span>
+		<div class="info-title">
+		 	{{commande.montantPayer | CurrencyFilter}}
+		  </div>
+	 </div>
+ </div>
+ <div class="commande-section-header-info">
+	 <div>
+		 <span>Quantite :</span>
+		 <div class="info-title">
+		 	{{commande.totalProduits}}
+		  </div>
+	 </div>
+	 
+	 <div>
+		 <span>Montant dû :</span>
+		<div class="info-title" ng-init="resteAPayer= commande.chiffreAffaire-commande.montantPayer">
+            {{resteAPayer |CurrencyFilter }}
+          </div>
+	 </div>
+ </div>
+ 	
+ </section>
+ <section class=" w3-row-padding commande-section-body ">
+ 	<!-- partie gauche -->
+ 	<div class=" panel panel-default commande-section-body-content ">
+ 		 <div class="w3-panel title-drugstore-content w3-text-indigo ">
+			  
+			    	<h3>liste des produits
+			    	</h3>
+			  
+		  </div>
+		  <hr/>
+ 		 <md-list>
+	<md-list-item ng-repeat="produit in commande.produits" ng-class="{'produit-line-impair':$odd}" >
+   						
+    					<div class="md-list-item-text list-date-cell-parent">
+    					<p class="list-date-cell">
+    					{{produit.details[0].expirationDate | date: 'MMM' }}
+    					</p>
+    					<p class="list-date-cell">
+    				
+    					{{produit.details[0].expirationDate | date: 'yyyy' }}
+    					
+    					</p>
+    					</div>
+    					<div class="md-list-item-text">
+    					 <img alt="premiere lettre produit" ng-src="/assets/img/lettre/{{produit.nom | FirstLetterFilter}}.PNG"/>
+    					</div>
+	 					<div class="md-list-item-text" >
+	 						<h4>{{produit.nom}}</h4>
+	 						<p class="md-caption">{{produit.description}}</p>
+	 					</div>
+	 					<div class="list-price-cell">{{produit.prixVente |CurrencyFilter}}
+	 					<md-tooltip>prix unitaire</md-tooltip>
+	 					</div>
+
+	 					<div class="md-list-item-text">
+			               <img alt="total produit" ng-src="/assets/img/chiffre/{{produit.quantite < 10 ? produit.quantite:'plus'}}.PNG"/>
+			               <md-tooltip>quantite de produit</md-tooltip>
+			            </div>
+		 				<div class="list-price-cell">{{prixTotal(produit) |CurrencyFilter}}
+		 				<md-tooltip>prix total du produit</md-tooltip></div>
+	 					
+   
+  </md-list-item>
+</md-list>
+	</div>
+ </section>
+
+</div>
+</div>

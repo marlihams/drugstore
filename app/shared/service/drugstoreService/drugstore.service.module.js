@@ -1,0 +1,1 @@
+angular.module('drugstore.service', ['ngResource','ngMaterial','drugstore.manager','pouchdb.service','drugstore.user']);

@@ -1,0 +1,242 @@
+<div id="commande-view-container">
+<div ui-view="header" class="header">
+    <!-- nesting the header  -->
+</div> 
+<div class="row commande-section-view-body">
+<section class=" panel panel-default depense-section-header  commande-edit-section-header">
+<!--  partie top
+ -->
+ <div class="depense-section-title">
+  <span> 
+    {{title}}
+ </span>
+ </div>
+ <div class="commande-section-header-info  depense-section-header-info ">
+     
+     <div>
+         <span>Depense Total :</span>
+         <div class="info-title summary_value_pos">
+
+            {{total | CurrencyFilter}}
+         </div>
+     </div>
+      <div>
+         <span>Autre Depense :</span>
+         <div class="info-title summary_value_pos">
+
+            {{otherDepense | CurrencyFilter}}
+         </div>
+     </div>
+     <div>
+         <span>Bon Actionnaire :</span>
+         <div class="info-title">
+            {{totalActionnaire | CurrencyFilter }}
+          </div>
+     </div>
+     
+    <div >
+         <span>Bon Homeland Investement :</span>
+        <div class="info-title summary_value_pos">
+            {{totalEntreprise | CurrencyFilter}}
+          </div>
+     </div>
+ </div>
+ 
+ </section>
+ <div  class="depense-edit-section">
+ <section class=" w3-row-padding  depense-section-historique">
+    <!-- partie gauche -->
+    <div class=" panel panel-default">
+         <div class="w3-panel title-drugstore-content w3-text-indigo  ">
+          
+                    <h6> Liste des dépenses
+                    </h6>
+           
+
+          </div>
+            
+          <hr/>
+       
+          <div class="depense-search">
+              <md-input-container >
+                 <md-datepicker ng-model="beginDate"  md-placeholder="date debut"></md-datepicker>
+             </md-input-container>
+
+             <md-input-container >
+                 <md-datepicker ng-model="endDate"  md-min-date=beginDate md-placeholder="date fin"></md-datepicker>
+             </md-input-container>
+              <md-input-container >
+              <button class="w3-btn w3-teal w3-round w3-hover-blue" ng-click="rechercheDepense(beginDate,endDate)">filtrer</button>
+              </md-input-container>
+
+        </div>
+ 
+        
+    <div class="depense-section-content-info">
+     <md-subheader class="md-primary">Depenses Globales</md-subheader>
+        <table class="produit-detail w3-table w3-table-all w3-bordered w3-centered ">
+        <thead>
+          <tr class="w3-light-grey">
+            <th>date</th>
+            <th class="depense-title">titre</th>
+            
+            <th class="depense-description">description </th>
+           
+            <th>Validation Actionnaire</th>
+              <th class="depense-prix">montant Depense</th>
+            <th>Validation Entreprise</th>
+            <th>cocher</th>
+          </tr>
+        </thead>
+        <tr  ng-repeat="depense in globalDepense track by $index">
+        <td>
+            {{depense.date | date :'dd/MM/yyyy'}}
+        </td>
+        <td>{{depense.title}}</td>
+       
+         
+          <td>{{depense.commentaire}}</td>
+        <td class="dailySale-non-valider" ng-class="{'dailySale-valider': depense.validateActionnaire}">{{depense.validateActionnaire |StatusFilter}} </td>
+        <td  class="list-price-cell" >{{depense.prix |CurrencyFilter}}</td>
+        <td class="dailySale-non-valider" ng-class="{'dailySale-valider': depense.validateEntreprise}" >{{depense.validateEntreprise |StatusFilter}}</td>
+        <td class="checkbox-cell" ng-init="selectedLine=false">
+            <md-checkbox  aria-label="checkbox-depense"  ng-model="depense.selected" ng-change="changeSelectedDepense(depense)" > 
+            </md-checkbox>
+        </td>
+         </tr>
+      </table>
+  </div>
+  <div class="depense-section-content-info">
+       <md-subheader class="md-primary">Bon Actionnaire/Entreprise</md-subheader>
+    <table class="w3-table w3-table-all w3-centered">
+    <thead>
+      <tr class="w3-light-grey">
+        <th>date</th>
+        <th class="depense-title">titre</th>
+         
+        <th class="depense-description">description</th>
+       
+        <th>validation Actionnaire</th>
+         <th class="depense-prix">montant</th>
+        <th>validation Entreprise</th>
+        <th>cocher</th>
+      </tr>
+    </thead>
+    <tr  ng-repeat="depense in bonDepense track by $index">
+    <td>
+        {{depense.date | date :'dd/MM/yyyy'}}
+    </td>
+    <td>{{depense.title}}</td>
+   
+      <td>{{depense.commentaire}}</td>
+    <td class="dailySale-non-valider" ng-class="{'dailySale-valider': depense.validateActionnaire}"  >{{depense.validateActionnaire |StatusFilter}}</td>
+      <td  class="list-price-cell" >{{depense.prix |CurrencyFilter}}</td>
+    <td class="dailySale-non-valider" ng-class="{'dailySale-valider': depense.validateEntreprise}"  >{{depense.validateEntreprise |StatusFilter}}</td>
+    <td class="checkbox-cell" ng-init="depense.selected=false" >
+        <md-checkbox   ng-change="changeSelectedDepense(depense)" aria-label="checkbox-depense"  ng-model="depense.selected" >
+
+        </md-checkbox>
+    </td>
+     </tr>
+  </table>
+  </div>
+
+  </div>
+ </section>
+<section class=" w3-row-padding depense-section-creation">
+    <!-- partie gauche -->
+    <div class=" panel panel-default">
+         <div class="w3-panel title-drugstore-content w3-text-indigo">
+              
+                    <h6> modification/creation d'une depense
+                    </h6>
+
+          </div>
+          <hr/>
+
+        <div class="depense-form">
+        <form name="depenseEditForm" novalidate ng-submit="depenseEditForm.$valid && saveChangement()" >
+        
+        
+        <md-input-container class="md-block">
+            <label>titre de la dépense</label>
+            <input type="text"   required  name="title" ng-model="displayedDepense.title">
+            <div  ng-show="submitted && depenseEditForm.$invalid" ng-messages="depenseEditForm.title.$error">
+                <div ng-message="required">le titre de la depense est obligatoire</div>
+            </div>
+        </md-input-container>
+       
+       
+
+         <md-input-container class="md-block">
+            <label>montant</label>
+            <input  required  type="number" name="prix" ng-model="displayedDepense.prix" >
+            <div  ng-show="submitted && depenseEditForm.$invalid"   ng-messages="depenseEditForm.prix.$error">
+                <div  ng-message="required">le montant de la  depense est obligatoire
+                </div>
+                
+            </div>
+        </md-input-container>
+     <md-input-container class="md-block">
+        <label>Description</label>
+        <textarea type="text" name="commentaire"  ng-model="displayedDepense.commentaire" required rows="2" ></textarea>
+        <div ng-show="submitted && depenseEditForm.$invalid"  ng-messages="depenseEditForm.commentaire.$error" >
+          <div ng-message="required">une description de la dépense est obligatoire</div>
+        </div>
+  </md-input-container>
+
+    <md-input-container class="md-block">
+       <md-radio-group  md-no-ink=true  ng-model="displayedDepense.type" layout="row" ng-change="changeDepenseType()">
+
+      <md-radio-button ng-repeat="element in typeDepense" 
+      ng-value="element.type" 
+      aria-label="{{element.type}}"
+      >
+
+             {{element.type}}
+
+      </md-radio-button>
+
+    </md-radio-group>
+    </md-input-container>
+
+  <md-input-container class="md-block" >
+  <span  >Validation Total :<span class="dailySale-non-valider" ng-class="{'dailySale-valider': statusValidation}" > {{ statusValidation |StatusFilter}}
+   <md-tooltip> status de validation de la dépense par tous les partenaires</md-tooltip>
+  </span>
+ 
+  </span>
+  </md-input-container>
+  
+  <div class=" container button-form-details">
+  <md-button class="md-raised md-primary" type="submit">
+     <md-icon md-svg-src="/assets/img/save_black_18px.svg" aria-label="Sauvegarder" >      
+      </md-icon>
+       Sauvegarder
+       <md-tooltip> sauvegarder les changements</md-tooltip>
+   </md-button>
+   <md-button class="md-raised validate-depense" ng-click="validerDepense($event)" >
+     <md-icon md-svg-src="/assets/img/assignment_check_18.svg" aria-label="delete" >      
+      </md-icon>
+       valider/invalider
+       <md-tooltip> valider  la depense</md-tooltip>
+   </md-button>
+  
+    
+  </div>
+    </form>
+
+
+
+    </div>
+
+        
+
+       
+    </div>
+
+   
+ </section>
+</div>
+</div>
+</div>

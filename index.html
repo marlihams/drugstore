@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	    <title>pharmacie-Paris</title>
+	    <link rel="stylesheet" href="/assets/libs/bootstrap/dist/css/bootstrap.min.css" />
+	      <link rel="stylesheet" href="/assets/libs/angular-material/angular-material.css">
+	    
+	     	<link rel='stylesheet' href='/assets/css/w3.css' />
+	    <!-- Defines CSS necessary for animations -->
+
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	    <link rel='stylesheet' href='/assets/libs/v-accordion/v-accordion.css'/>
+		<link rel='stylesheet' href='/assets/css/style.css' />
+		<link rel="stylesheet" href="/assets/css/animation.css" />
+		<link rel='stylesheet' href='/assets/css/myCss.css' />
+	    
+	   <!--   <link rel='stylesheet' href='/app/shared/componetcommande-list/commande-list.css' />
+	   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+
+	     <!-- Javascript file  -->
+		<script src="/assets/libs/jquery/dist/jquery.js"></script>
+		<script src="/assets/libs/bootstrap/dist/js/bootstrap.js"></script>
+	    <script src="/assets/libs/angular/angular.min.js"></script>
+    	<script src="/assets/libs/angular-animate/angular-animate.min.js"></script>
+    	<script src="/assets/libs/angular-messages/angular-messages.min.js"></script>
+    	<script src="/assets/libs/angular-material/angular-material.min.js"></script> 
+	    <script src="/assets/libs/angular-ui-router/release/angular-ui-router.min.js"></script>
+	    <script src="/assets/libs/angular-resource/angular-resource.min.js"></script>
+	   
+	     <script src="/assets/libs/angular-aria.min.js"></script>
+
+	     <script src="/assets/libs/ng-file-upload/ng-file-upload-shim.min.js"></script> 
+	      <script src="/assets/libs/ng-file-upload/ng-file-upload.min.js"></script>
+	       <script src="/assets/libs/pouchdb-6.3.4.min.js"></script>
+	       <script src="/assets/libs/pouchdb.find.js"></script>
+	        <script src="/assets/libs/angular-pouchdb.js"></script>
+	         <script src="/assets/libs/async/dist/async.min.js"></script>
+	         <script src="/assets/libs/js-xlsx/dist/xlsx.full.min.js"></script>
+	       
+
+	    
+	    <!--  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.7/angular-material.min.js"></script>
+
+ 		<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.7/angular-material.min.js"></script>
+ 
+ -->
+	      <script src="/assets/libs/v-accordion/v-accordion.js"></script>
+	    
+
+
+
+		<!-- 		begin composant   file            -->	
+
+		<script src="/app/composants/commande/commande.module.js"></script>
+		<script src="/app/composants/commande/js/commande.details.controller.js"></script>
+		<script src="/app/composants/commande/js/commande.edit.controller.js"></script>
+		<script src="/app/composants/commande/js/commande.new.controller.js"></script>
+		<script src="/app/composants/commande/js/commande.service.js"></script>
+		
+
+
+
+		<script src="/app/composants/dailySale/dailySale.module.js"></script>
+		<script src="/app/composants/dailySale/js/dailySale.details.controller.js"></script>
+		<script src="/app/composants/dailySale/js/dailySale.service.js"></script>
+
+		
+
+
+		<script src="/app/composants/depense/depense.module.js"></script>
+		<script src="/app/composants/depense/js/depense.controller.js"></script>
+		<script src="/app/composants/depense/js/depense.service.js"></script>
+
+
+		
+
+
+		<script src="/app/composants/produit/produit.module.js"></script>
+		<script src="/app/composants/produit/js/produit.edit.controller.js"></script>
+		<script src="/app/composants/produit/js/produit.new.controller.js"></script>
+		<script src="/app/composants/produit/js/produit.service.js"></script>
+
+		
+
+
+		<script src="/app/composants/user/user.module.js"></script>
+		<script src="/app/composants/user/js/user.controller.js"></script>
+		<script src="/app/composants/user/js/user.service.js"></script>
+
+
+
+		<script src="/app/composants/error/error.module.js"></script>
+		<script src="/app/composants/error/js/error.controller.js"></script>
+		
+
+
+		<script src="/app/composants/header/header.module.js"></script>
+		<script src="/app/composants/header/js/header.controller.js"></script>
+
+		<script src="/app/composants/home/menu/menu.module.js"></script>
+		<script src="/app/composants/home/menu/client/menu.client.controller.js"></script>
+		<script src="/app/composants/home/menu/commande/menu.commande.controller.js"></script>
+		<script src="/app/composants/home/menu/produit/menu.produit.controller.js"></script>
+		<script src="/app/composants/home/menu/dailySale/menu.dailySale.controller.js"></script>
+		
+		<script src="/app/composants/home/menu/menu.config.js"></script>
+		<script src="/app/composants/home/menu/menu.config.controller.js"></script>
+		
+
+
+		<script src="/app/composants/home/home.module.js"></script>
+
+		
+
+		<script src="/app/composants/composant.module.js"></script>
+
+		<!-- 		end composant   file            -->	
+		
+		<!-- 		begin shared   file            -->	
+		<script src="/app/shared/directive/directive.module.js"></script>
+		<script src="/app/shared/directive/chooseFile/choose-file.module.js"></script>
+		<script src="/app/shared/directive/chooseFile/choose-file.js"></script>
+
+		<script src="/app/shared/filter/filter.module.js"></script>
+		<script src="/app/shared/filter/currencyFilter/currency.filter.module.js"></script>
+		<script src="/app/shared/filter/currencyFilter/currency.filter.js"></script>
+
+		<script src="/app/shared/filter/statusFilter/status.filter.module.js"></script>
+		<script src="/app/shared/filter/statusFilter/status.filter.js"></script>
+
+		<script src="/app/shared/filter/firstLetterFilter/firstLetter.filter.module.js"></script>
+		<script src="/app/shared/filter/firstLetterFilter/firstLetter.filter.js"></script>
+
+		<script src="/app/shared/service/drugstoreService/drugstore.service.module.js"></script>
+		<script src="/app/shared/service/drugstoreService/drugstore.service.js"></script>
+
+		<script src="/app/shared/service/pouchdbService/pouchdb.service.module.js"></script>
+		<script src="/app/shared/service/pouchdbService/pouchdb.service.js"></script>
+
+		
+		<script src="/app/shared/service/manager/manager.module.js"></script>
+		<script src="/app/shared/service/manager/message.manager.service.js"></script>
+		<script src="/app/shared/service/manager/utility.manager.service.js"></script>
+		<script src="/app/shared/service/manager/user.manager.service.js"></script>
+		<script src="/app/shared/service/manager/drugstore.manager.service.js"></script>
+		<script src="/app/shared/service/manager/commande.manager.service.js"></script>
+
+		<script src="/app/shared/service/manager/dailySale.manager.service.js"></script>
+		<script src="/app/shared/service/manager/depense.manager.service.js"></script>
+		<script src="/app/shared/service/manager/produit.manager.service.js"></script>
+		
+		
+
+
+		<script src="/app/shared/shared.module.js"></script>
+
+
+	  <!-- 		end shared   file            -->	
+	   <script src="/app/application.module.js"></script>
+
+		<script src="/app/composants/home/route/home.route.js"></script>
+		<script src="/app/composants/commande/route/commande.route.js"></script>
+
+		<script src="/app/composants/dailySale/route/dailySale.route.js"></script>
+
+		<script src="/app/composants/depense/route/depense.route.js"></script>
+
+		<script src="/app/composants/produit/route/produit.route.js"></script>
+
+		<script src="/app/composants/home/js/home.controller.js"></script>
+
+
+	   <script src="/app/application.js"></script>
+
+	  <!-- 		end route   file            -->	
+
+  </head>
+  <body ng-app="drugStoreSoftware">
+			<div ui-view  id="view-frame"></div>
+ 
+  </body>
+</html>

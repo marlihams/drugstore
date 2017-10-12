@@ -1,0 +1,277 @@
+<div id="commande-view-container">
+<div ui-view="header" class="header">
+    <!-- nesting the header  -->
+</div> 
+<div class="row commande-section-view-body">
+<section class=" panel panel-default commande-section-header  commande-edit-section-header">
+<!--  partie top
+ -->
+<div class="commande-section-title">
+
+ <p> Information Génerique  des Produits</p>
+ 
+</div>
+
+ <div class="commande-section-header-info">
+     
+     <div>
+         <span>Produit Expirant dans L'année courante:</span>
+         <div class="info-title">
+
+            {{globalInfo.yearExpiration}}
+         </div>
+
+     </div>
+    <div>
+         <span>Produit Expiré:</span>
+        <div class="info-title">
+            {{globalInfo.expired}}
+          </div>
+     </div>
+     <div>
+         <span>Total Produit:</span>
+        <div class="info-title">
+            {{globalInfo.nbProduit}}
+          </div>
+           <md-tooltip>nombre distinct de produit présent  dans la pharmacie</md-tooltip>
+     </div>
+ </div>
+ <div class="commande-section-header-info">
+     <div>
+         <span>Produit Expirant dans Le mois Courant:</span>
+         <div class="info-title">
+
+            {{globalInfo.monthExpiration}}
+         </div>
+     </div>
+    <div>
+         <span>Produit en quasi-rupture de Stock :</span>
+        <div class="info-title">
+            {{globalInfo.outOfStock}}
+          </div>
+            <md-tooltip>produit dont la quantité est inférieur à 5</md-tooltip>
+
+     </div>
+     <div>
+         <span>Quantite de Produit:</span>
+        <div class="info-title">
+            {{globalInfo.nbstock}}
+          </div>
+          <md-tooltip>quantite total de produit dans la pharmacie</md-tooltip>
+     </div>
+ </div>
+    
+ </section>
+ <div  class="commande-edit-section">
+ <section class=" w3-row-padding  commande-section-produit">
+    <!-- partie gauche -->
+    <div class=" panel panel-default">
+         <div class="w3-panel  title-drugstore-content w3-text-indigo ">
+                <div class="w3-container  w3-cell">
+                    <h6 class="h6-title">Ajout multiple de produit
+                    </h6>
+                </div>
+          </div>
+            <div ng-show="error" class="error-message">
+            <p class="form-error">
+             {{errorMessage}}
+            </p>
+          </div>
+          <div>
+            <choose-file layout="row">
+             <div class="file-label" >Nom du fichier :</div>
+            <input id="fileInput" type="file" arai-label="file input" class="ng-hide" ng-model="productFile" name="file">
+            <md-input-container flex class="md-block">
+              <input type="text" ng-model="fileName" aria-label="filename" disabled>
+            </md-input-container>
+             <div class="file-button">
+              <md-button id="uploadButton" class="md-fab md-mini" aria-label="uploadFile" >
+                <md-icon md-svg-src="/assets/img/attach_file.svg"></md-icon>
+              </md-button>
+            </div>
+         </choose-file> 
+            <div class="button-download">
+               <md-button class="md-raised md-primary" ng-click="addMultipleProduit()">
+               Telecharger
+               <md-icon md-svg-src="/assets/img/send_icon.svg">
+                   
+               </md-icon>
+               </md-button>
+            </div>
+
+          </div>
+    </div>
+    <div class=" panel panel-default">
+         <div class="w3-panel  title-drugstore-content w3-text-indigo ">
+                <div class="w3-container  w3-cell">
+                    <h6>produits en rupture stock
+                    </h6>
+                </div>
+
+        <md-list>
+    <md-list-item   class="md-no-proxy" ng-repeat="produit in bestSaleProduit"    ng-class="{'produit-line-impair':$odd} "  >
+                        
+                       <!--  <div class="md-list-item-text list-date-cell-parent ">
+                        <p class="list-date-cell">
+                        {{produit.details.sort(sortDetailProduit(a,b))[0].expirationDate | date: 'MMM' }}
+                        </p>
+                        <p class="list-date-cell">
+                    
+                        {{produit.details[0].expirationDate | date: 'yyyy' }}
+                        
+                        </p>
+                        </div>
+                        <div class="md-list-item-text" >
+                            <h4>{{produit.nom}}</h4>
+                            <p class="md-caption">{{produit.description}}</p>
+                        </div>
+                        <div ng-init="produit.max=calculQuantiteProduit(produit.details)" ng-model="produit.max">{{produit.max}}
+                        </div>
+                         <div class="list-price-cell">{{produit.det |CurrencyFilter}}</div>
+                        <div class="list-price-cell">{{produit.prixVente |CurrencyFilter}}</div>
+                        <div >
+                        
+                         <md-icon md-svg-src="/assets/img/aspect_ratio_black_24.svg" class="md-secondary   md-hue-2" ng-click="produitsDetails($event,produit.details)" aria-label="details produit">
+                             <md-tooltip>informations complémentaires</md-tooltip>
+                         </md-icon>
+                         </div> -->
+                        
+                        
+   
+      </md-list-item>
+    </md-list>
+    </div>
+ </div>
+ </section>
+<section class=" w3-row-padding commande-section-selected-produit ">
+    <!-- partie gauche -->
+    <div class=" panel panel-default produit-new-content-section">
+         <div class="w3-panel title-drugstore-content   w3-text-indigo">
+              
+                    <h6> Ajout Nouveau Produit
+                    </h6>
+
+          </div>
+          <hr/>
+
+    
+        <form name="produitNewForm"   novalidate ng-submit=" detailsProduitIsValid() && produitNewForm.$valid && saveChangement()">
+        <div class="produit-form">
+        <md-input-container class="md-block">
+            <label>nom du produit</label>
+            <input type="text"   required  name="nom" ng-model="produit.nom">
+            <div ng-messages="isSubmited&& produitNewForm.nom.$error">
+                <div ng-message="required">le nom du produit est obligatoire</div>
+            </div>
+        </md-input-container>
+       
+        <md-input-container class="md-block">
+            <label>prix d'achat</label>
+            <input  required=""  type="number" name="prixAchat" ng-model="produit.prixAchat">
+            <div ng-messages="isSubmited && produitNewForm.prixAchat.$error">
+                <div ng-message="required">le prix d'achat du produit est obligatoire
+                </div>
+            </div>
+        </md-input-container>
+
+         <md-input-container class="md-block">
+            <label>prix de vente</label>
+            <input  required=""  type="number" name="prixVente" ng-model="produit.prixVente" ng-min="produit.prixAchat">
+            <div ng-messages="isSubmited && produitNewForm.prixVente.$error">
+                <div ng-message="required">le prix  de vente du produit est obligatoire
+                </div>
+                <div ng-message="min">le prix de vente doit être supérieur ou égale au prix d'achat.
+                </div>
+            </div>
+        </md-input-container>
+
+     <md-input-container>
+        <label>Description</label>
+        <textarea type="text" name="description" ng-model="produit.description" required  rows="2"></textarea>
+        <div ng-messages="isSubmited && produitNewForm.description.$error" >
+          <div ng-message="required">une description du produit est obligatoire</div>
+        </div>
+  </md-input-container>
+  </div>
+
+  <div class="produit-table-content">
+  <div ng-init="nbSelected=0;isStarted=false" ng-show="nbSelected ==0 && isStarted" class="form-error error-zone">
+     selectionner un ou plusieurs emplacement à supprimer
+  </div>
+  <div ng-init="isDetailValid=false" ng-show="isSubmited && isDetailValid==0" class="form-error error-zone">
+    les champs du tableau sont obligatoires et  un produit doit avoir au moins une date d'expiration, un emplacement et une quantité
+  </div>
+  
+    <table class="produit-detail w3-table-all w3-centered">
+    <thead>
+      <tr class="w3-light-grey">
+        <th >Date d'expiration</th>
+        <th> emplacement</th>
+        <th>quantite</th>
+        <th>selection</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr  ng-repeat="details in produit.details track by $index">
+    <td   ng-init="details.expirationDate=initializeExpirationDate(details);details.key=initializeKey(details)">
+        <md-datepicker  ng-model="details.expirationDate" ></md-datepicker>
+    </td>
+    <td >
+         <div class="form-group colEmp">
+             <input type="text" class="form-control" placeholder="saisir emplacement" ng-model="details.emplacement">
+    </div>
+    </td>
+    <td >
+        <div class="form-group  colQuant">
+             <input type="number" class="form-control" placeholder="saisir quantite" ng-model="details.quantite">
+    </div>
+    </td>
+    <td ng-init="detail.selected=false">
+        <div class="checkbox-cell" >
+        <md-checkbox  aria-label="checkbox-details"  ng-model="details.selected" ng-change="addDetailToDelete(details)" >
+            
+        </md-checkbox>
+        </div>
+    </td>
+     </tr>
+     </tbody>
+  </table>
+ 
+  <div class=" container button-produit-new-details">
+    <md-button ng-click=addDetails()>
+     <md-icon md-svg-src="/assets/img/plus_18.svg" aria-label="ajouter" >      
+      </md-icon>
+       Ajouter
+       <md-tooltip> ajouter un emplacement</md-tooltip>
+      </md-button>
+       
+      <md-button ng-click=deleteSelectedDetails()>
+      <md-icon md-svg-src="/assets/img/delete_18_d.svg"  aria-label="supprimer" >
+      </md-icon>
+       effacer
+       <md-tooltip> supprimer l'emplacement selectionné</md-tooltip>
+       </md-button>
+  </div>
+</div>
+  <div class=" container button-form-details">
+  <md-button class="md-raised md-primary" type="submit">
+     <md-icon md-svg-src="/assets/img/save_black_18px.svg" aria-label="Sauvegarder" >      
+      </md-icon>
+       Sauvegarder
+       <md-tooltip> enregistrer les produits</md-tooltip>
+   </md-button>
+   <md-button class="md-accent md-raised md-hue-2" ng-click="clearProduit()" >
+     <md-icon md-svg-src="/assets/img/delete_18.svg" aria-label="delete" >      
+      </md-icon>
+       Vider
+       <md-tooltip> vide tous les champs du formulaire</md-tooltip>
+   </md-button>
+  
+    
+  </div>
+    </form>    
+</div>
+ </section>
+</div>
+</div>
+</div>
